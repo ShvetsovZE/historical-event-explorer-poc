@@ -1,4 +1,5 @@
 using HistoricalEventExporter.Abstraction;
+using HistoricalEventExporter.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HistoricalEventExporter.Controllers
@@ -7,16 +8,23 @@ namespace HistoricalEventExporter.Controllers
     [Route("[controller]")]
     public class ExportController : ControllerBase
     {
-        private readonly IEventExporter _exporter;
-        public ExportController(IEventExporter exporter)
+        private readonly IEventExporter<TeamMemberInvitedEvent> _teamMemberInvitedEventExporter;
+        private readonly IEventExporter<BookingMadeEvent> _bookingMadeEventExporter;
+
+        public ExportController(
+            IEventExporter<TeamMemberInvitedEvent> teamMemberInvitedEventExporter,
+            IEventExporter<BookingMadeEvent> bookingMadeEventExporter
+            )
         {
-            _exporter = exporter;
+            _teamMemberInvitedEventExporter = teamMemberInvitedEventExporter;
+            _bookingMadeEventExporter = bookingMadeEventExporter;
         }
 
         [HttpGet("StartExport")]
         public IActionResult Get()
         {
-            _exporter.StartExportAsync();
+            _teamMemberInvitedEventExporter.StartExportAsync();
+            _bookingMadeEventExporter.StartExportAsync();
             return Ok();
         }
     }

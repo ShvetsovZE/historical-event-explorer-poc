@@ -1,6 +1,6 @@
 ﻿namespace HistoricalEventExporter.Abstraction
 {
-    public interface IEventExporter
+    public interface IEventExporter<T>
     {
         Task StartExportAsync();
         Task StopExportAsync();

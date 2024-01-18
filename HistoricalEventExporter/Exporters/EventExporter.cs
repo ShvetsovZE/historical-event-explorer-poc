@@ -1,40 +1,42 @@
 ﻿using HistoricalEventExporter.Abstraction;
+using HistoricalEventExporter.Models;
 using Microsoft.Extensions.Logging;
 
 namespace HistoricalEventExporter.Exporters
 {
-    public class EventExporter : IEventExporter, IHostedService
+    public class EventExporter<T> : IEventExporter<T>, IHostedService
     {
-        private readonly ILogger<EventExporter> _logger;
+        private readonly ILogger<EventExporter<T>> _logger;
 
         public EventExporter(
-            ILogger<EventExporter> logger)
+            ILogger<EventExporter<T>> logger)
         {
             _logger = logger;
         }
 
         public async Task StartAsync(CancellationToken cancellationToken)
         {
-            _logger.LogInformation("Starts Hosted service");
+            _logger.LogInformation($"Starts Hosted service for {typeof(T).Name} event type export");
 
         }
 
         public async Task StartExportAsync()
         {
-            _logger.LogInformation("Starts Exporting");
+            _logger.LogInformation($"Starts Exporting events type: {typeof(T).Name}");
             await StartAsync(new CancellationToken());
         }
 
         public async Task StopAsync(CancellationToken cancellationToken)
         {
-            _logger.LogInformation("Stops Hosted service");
+            _logger.LogInformation($"Stops Hosted service for {typeof(T).Name} event type export");
 
         }
 
         public async Task StopExportAsync()
         {
 
-            _logger.LogInformation("Stops Exporting");
+            _logger.LogInformation($"Stops Exporting events type: {typeof(T).Name}");
         }
+     
     }
 }

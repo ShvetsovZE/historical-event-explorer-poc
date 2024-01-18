@@ -2,6 +2,7 @@
 
 using HistoricalEventExporter.Abstraction;
 using HistoricalEventExporter.Exporters;
+using HistoricalEventExporter.Models;
 
 namespace HistoricalEventExporter
 {
@@ -41,8 +42,15 @@ namespace HistoricalEventExporter
 
         private static void ConfigureServices(WebApplicationBuilder builder)
         {
-            builder.Services.AddSingleton<IEventExporter, EventExporter>();
-            builder.Services.AddHostedService<EventExporter>(provider => provider.GetService<IEventExporter>() as EventExporter);
+            //TeamMemberInvitedEvent exporter registration
+            builder.Services.AddSingleton<IEventExporter<TeamMemberInvitedEvent>, EventExporter<TeamMemberInvitedEvent>>();
+            builder.Services.AddHostedService<EventExporter<TeamMemberInvitedEvent>>(provider => provider.GetService<IEventExporter<TeamMemberInvitedEvent>>() as EventExporter<TeamMemberInvitedEvent>);
+
+            //BookingMadeEvent exporter registration
+            builder.Services.AddSingleton<IEventExporter<BookingMadeEvent>, EventExporter<BookingMadeEvent>>();
+            builder.Services.AddHostedService<EventExporter<BookingMadeEvent>>(provider => provider.GetService<IEventExporter<BookingMadeEvent>>() as EventExporter<BookingMadeEvent>);
+
+
         }
     }
 }
