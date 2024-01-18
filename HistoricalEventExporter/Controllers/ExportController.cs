@@ -1,5 +1,4 @@
 using HistoricalEventExporter.Abstraction;
-using HistoricalEventExporter.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HistoricalEventExporter.Controllers

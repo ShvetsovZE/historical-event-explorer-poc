@@ -2,7 +2,6 @@
 
 using HistoricalEventExporter.Abstraction;
 using HistoricalEventExporter.Exporters;
-using HistoricalEventExporter.Models;
 
 namespace HistoricalEventExporter
 {
