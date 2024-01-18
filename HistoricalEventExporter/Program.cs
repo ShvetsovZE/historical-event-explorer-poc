@@ -21,7 +21,11 @@ namespace HistoricalEventExporter
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Logging.AddJsonConsole();
-
+            builder.Services.Configure<HostOptions>(options =>
+            {
+                options.ServicesStartConcurrently = true;
+                options.ServicesStopConcurrently = true;
+            });
             ConfigureServices(builder.Services);
 
             var app = builder.Build();
