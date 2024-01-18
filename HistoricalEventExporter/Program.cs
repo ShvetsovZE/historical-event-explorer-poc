@@ -1,4 +1,8 @@
 
+
+using HistoricalEventExporter.Abstraction;
+using HistoricalEventExporter.Exporters;
+
 namespace HistoricalEventExporter
 {
     public class Program
@@ -13,6 +17,8 @@ namespace HistoricalEventExporter
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+            ConfigureServices(builder);
 
             var app = builder.Build();
 
@@ -31,6 +37,12 @@ namespace HistoricalEventExporter
             app.MapControllers();
 
             app.Run();
+        }
+
+        private static void ConfigureServices(WebApplicationBuilder builder)
+        {
+            builder.Services.AddSingleton<IEventExporter, EventExporter>();
+            builder.Services.AddHostedService<EventExporter>(provider => provider.GetService<IEventExporter>() as EventExporter);
         }
     }
 }
