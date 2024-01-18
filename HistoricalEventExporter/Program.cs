@@ -18,7 +18,7 @@ namespace HistoricalEventExporter
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-            ConfigureServices(builder);
+            ConfigureServices(builder.Services);
 
             var app = builder.Build();
 
@@ -39,17 +39,19 @@ namespace HistoricalEventExporter
             app.Run();
         }
 
-        private static void ConfigureServices(WebApplicationBuilder builder)
+        private static void ConfigureServices(IServiceCollection services)
         {
-            //TeamMemberInvitedEvent exporter registration
-            builder.Services.AddSingleton<IEventExporter<TeamMemberInvitedEvent.TeamMemberInvitedEvent>, EventExporter<TeamMemberInvitedEvent.TeamMemberInvitedEvent>>();
-            builder.Services.AddHostedService<EventExporter<TeamMemberInvitedEvent.TeamMemberInvitedEvent>>(provider => provider.GetService<IEventExporter<TeamMemberInvitedEvent.TeamMemberInvitedEvent>>() as EventExporter<TeamMemberInvitedEvent.TeamMemberInvitedEvent>);
+            //TeamMemberInvitedEvent exporter registration          
+            RegisterExporter<TeamMemberInvitedEvent.TeamMemberInvitedEvent>(services);
 
             //BookingMadeEvent exporter registration
-            builder.Services.AddSingleton<IEventExporter<BookingMadeEvent.BookingMadeEvent>, EventExporter<BookingMadeEvent.BookingMadeEvent>>();
-            builder.Services.AddHostedService<EventExporter<BookingMadeEvent.BookingMadeEvent>>(provider => provider.GetService<IEventExporter<BookingMadeEvent.BookingMadeEvent>>() as EventExporter<BookingMadeEvent.BookingMadeEvent>);
+            RegisterExporter<BookingMadeEvent.BookingMadeEvent>(services);
+        }
 
-
+        private static void RegisterExporter<T>(IServiceCollection services)
+        {
+            services.AddSingleton<IEventExporter<T>, EventExporter<T>>();
+            services.AddHostedService<EventExporter<T>>(provider => provider.GetService<IEventExporter<T>>() as EventExporter<T>);
         }
     }
 }
