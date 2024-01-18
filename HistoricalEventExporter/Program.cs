@@ -1,6 +1,7 @@
 
 
 using HistoricalEventExporter.Abstraction;
+using HistoricalEventExporter.Common;
 using HistoricalEventExporter.Exporters;
 
 namespace HistoricalEventExporter
@@ -17,6 +18,7 @@ namespace HistoricalEventExporter
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            builder.Logging.AddJsonConsole();
 
             ConfigureServices(builder.Services);
 
@@ -41,6 +43,10 @@ namespace HistoricalEventExporter
 
         private static void ConfigureServices(IServiceCollection services)
         {
+
+            //REgisterPublisher
+           
+
             //TeamMemberInvitedEvent export registration          
             RegisterExporter<TeamMemberInvitedEvent.TeamMemberInvitedEvent>(services);
             services.AddSingleton<IEventDataReader<TeamMemberInvitedEvent.TeamMemberInvitedEvent>, TeamMemberInvitedEvent.TeamMemberInvitedEventDataReader>();  
@@ -52,8 +58,10 @@ namespace HistoricalEventExporter
 
         private static void RegisterExporter<T>(IServiceCollection services)
         {
+            services.AddSingleton<IEventPublisher<T>, EventPublisher<T>>();
             services.AddSingleton<IEventExporter<T>, EventExporter<T>>();           
             services.AddHostedService<EventExporter<T>>(provider => provider.GetService<IEventExporter<T>>() as EventExporter<T>);
+           
         }
     }
 }

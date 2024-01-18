@@ -7,12 +7,15 @@ namespace HistoricalEventExporter.Exporters
     {
         private readonly ILogger<EventExporter<T>> _logger;
         private readonly IEventDataReader<T> _eventDataReader;
+        private readonly IEventPublisher<T> _eventPublisher;
 
         public EventExporter(
             IEventDataReader<T> eventDataReader,
+            IEventPublisher<T> eventPublisher,
             ILogger<EventExporter<T>> logger)
         {
             _eventDataReader = eventDataReader;
+            _eventPublisher = eventPublisher;
             _logger = logger;
         }
 
@@ -21,11 +24,9 @@ namespace HistoricalEventExporter.Exporters
             _logger.LogInformation($"Starts Hosted service for {typeof(T).Name} event type export");
 
             var events = await _eventDataReader.GetDataAsync();
-
-            foreach (var @event in events)
-            {
-                _logger.LogInformation($"Exporting {@event.GetType().Name}");
-            }
+            _logger.LogInformation($"Found {events.Count()} events of type {typeof(T).Name}");
+            
+            await _eventPublisher.PublishEventsAsync(events);
 
         }
 
