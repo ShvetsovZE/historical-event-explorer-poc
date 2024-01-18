@@ -28,6 +28,8 @@ namespace HistoricalEventExporter.Exporters
             
             await _eventPublisher.PublishEventsAsync(events);
 
+           await StopAsync(cancellationToken);
+
         }
 
         public async Task StartExportAsync()
