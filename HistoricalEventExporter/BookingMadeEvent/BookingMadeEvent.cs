@@ -1,6 +1,7 @@
 ﻿namespace HistoricalEventExporter.BookingMadeEvent
 {
-    public class BookingMadeEvent
+    public record BookingMadeEvent
     {
+       public  int OrganisationId { get; init; }
     }
 }

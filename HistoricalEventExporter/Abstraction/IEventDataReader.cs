@@ -2,5 +2,6 @@
 {
     public interface IEventDataReader<T>
     {
+        Task<IEnumerable<T>> GetDataAsync();
     }
 }

@@ -41,16 +41,18 @@ namespace HistoricalEventExporter
 
         private static void ConfigureServices(IServiceCollection services)
         {
-            //TeamMemberInvitedEvent exporter registration          
+            //TeamMemberInvitedEvent export registration          
             RegisterExporter<TeamMemberInvitedEvent.TeamMemberInvitedEvent>(services);
+            services.AddSingleton<IEventDataReader<TeamMemberInvitedEvent.TeamMemberInvitedEvent>, TeamMemberInvitedEvent.TeamMemberInvitedEventDataReader>();  
 
-            //BookingMadeEvent exporter registration
+            //BookingMadeEvent export registration
             RegisterExporter<BookingMadeEvent.BookingMadeEvent>(services);
+            services.AddSingleton<IEventDataReader<BookingMadeEvent.BookingMadeEvent>, BookingMadeEvent.TeamMemberInvitedEventDataReader>();
         }
 
         private static void RegisterExporter<T>(IServiceCollection services)
         {
-            services.AddSingleton<IEventExporter<T>, EventExporter<T>>();
+            services.AddSingleton<IEventExporter<T>, EventExporter<T>>();           
             services.AddHostedService<EventExporter<T>>(provider => provider.GetService<IEventExporter<T>>() as EventExporter<T>);
         }
     }
