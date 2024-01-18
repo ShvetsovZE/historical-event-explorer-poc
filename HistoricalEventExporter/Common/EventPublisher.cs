@@ -20,11 +20,8 @@ namespace HistoricalEventExporter.Common
 
             foreach (var batch in batches)
             {
-                var sendTasks = batch.Select(@event =>
-                    Task.Run(async () => await PublishEventAsync(@event)
-                    )
-                );
-                await Task.WhenAll(sendTasks);
+                var publishTask = batch.Select(evnt => PublishEventAsync(evnt));
+                await Task.WhenAll(publishTask);
                 _logger.LogInformation(batchSize + " events published");
             }
         }
