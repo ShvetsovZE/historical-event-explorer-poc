@@ -2,6 +2,8 @@
 
 using HistoricalEventExporter.Abstraction;
 using HistoricalEventExporter.Common;
+using HistoricalEventExporter.EventTypes.BookingMadeEvent;
+using HistoricalEventExporter.EventTypes.TeamMemberInvitedEvent;
 using HistoricalEventExporter.Exporters;
 
 namespace HistoricalEventExporter
@@ -42,26 +44,21 @@ namespace HistoricalEventExporter
         }
 
         private static void ConfigureServices(IServiceCollection services)
-        {
-
-            //REgisterPublisher
-           
-
+        {  
             //TeamMemberInvitedEvent export registration          
-            RegisterExporter<TeamMemberInvitedEvent.TeamMemberInvitedEvent>(services);
-            services.AddSingleton<IEventDataReader<TeamMemberInvitedEvent.TeamMemberInvitedEvent>, TeamMemberInvitedEvent.TeamMemberInvitedEventDataReader>();  
+            RegisterExporter<TeamMemberInvitedEvent>(services);
+            services.AddSingleton<IEventDataReader<TeamMemberInvitedEvent>, TeamMemberInvitedEventDataReader>();  
 
             //BookingMadeEvent export registration
-            RegisterExporter<BookingMadeEvent.BookingMadeEvent>(services);
-            services.AddSingleton<IEventDataReader<BookingMadeEvent.BookingMadeEvent>, BookingMadeEvent.TeamMemberInvitedEventDataReader>();
+            RegisterExporter<BookingMadeEvent>(services);
+            services.AddSingleton<IEventDataReader<BookingMadeEvent>, BookingMadeEventDataReader>();
         }
 
         private static void RegisterExporter<T>(IServiceCollection services)
         {
             services.AddSingleton<IEventPublisher<T>, EventPublisher<T>>();
             services.AddSingleton<IEventExporter<T>, EventExporter<T>>();           
-            services.AddHostedService<EventExporter<T>>(provider => provider.GetService<IEventExporter<T>>() as EventExporter<T>);
-           
+            services.AddHostedService<EventExporter<T>>(provider => provider.GetService<IEventExporter<T>>() as EventExporter<T>);           
         }
     }
 }

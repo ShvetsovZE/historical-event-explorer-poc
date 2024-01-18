@@ -1,4 +1,4 @@
-﻿namespace HistoricalEventExporter.TeamMemberInvitedEvent
+﻿namespace HistoricalEventExporter.EventTypes.TeamMemberInvitedEvent
 {
     public class TeamMemberInvitedEvent
     {

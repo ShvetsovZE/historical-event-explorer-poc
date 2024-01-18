@@ -7,12 +7,12 @@ namespace HistoricalEventExporter.Controllers
     [Route("[controller]")]
     public class ExportController : ControllerBase
     {
-        private readonly IEventExporter<TeamMemberInvitedEvent.TeamMemberInvitedEvent> _teamMemberInvitedEventExporter;
-        private readonly IEventExporter<BookingMadeEvent.BookingMadeEvent> _bookingMadeEventExporter;
+        private readonly IEventExporter<EventTypes.TeamMemberInvitedEvent.TeamMemberInvitedEvent> _teamMemberInvitedEventExporter;
+        private readonly IEventExporter<EventTypes.BookingMadeEvent.BookingMadeEvent> _bookingMadeEventExporter;
 
         public ExportController(
-            IEventExporter<TeamMemberInvitedEvent.TeamMemberInvitedEvent> teamMemberInvitedEventExporter,
-            IEventExporter<BookingMadeEvent.BookingMadeEvent> bookingMadeEventExporter
+            IEventExporter<EventTypes.TeamMemberInvitedEvent.TeamMemberInvitedEvent> teamMemberInvitedEventExporter,
+            IEventExporter<EventTypes.BookingMadeEvent.BookingMadeEvent> bookingMadeEventExporter
             )
         {
             _teamMemberInvitedEventExporter = teamMemberInvitedEventExporter;

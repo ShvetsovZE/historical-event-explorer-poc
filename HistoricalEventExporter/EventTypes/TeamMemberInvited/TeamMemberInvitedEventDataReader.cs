@@ -1,6 +1,6 @@
 ﻿using HistoricalEventExporter.Abstraction;
 
-namespace HistoricalEventExporter.TeamMemberInvitedEvent
+namespace HistoricalEventExporter.EventTypes.TeamMemberInvitedEvent
 {
     public class TeamMemberInvitedEventDataReader : IEventDataReader<TeamMemberInvitedEvent>
     {

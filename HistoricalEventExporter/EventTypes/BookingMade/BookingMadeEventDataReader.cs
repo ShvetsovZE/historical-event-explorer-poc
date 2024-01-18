@@ -1,8 +1,8 @@
 ﻿using HistoricalEventExporter.Abstraction;
 
-namespace HistoricalEventExporter.BookingMadeEvent
+namespace HistoricalEventExporter.EventTypes.BookingMadeEvent
 {
-    public class TeamMemberInvitedEventDataReader : IEventDataReader<BookingMadeEvent>
+    public class BookingMadeEventDataReader : IEventDataReader<BookingMadeEvent>
     {
         public async Task<IEnumerable<BookingMadeEvent>> GetDataAsync()
         {
