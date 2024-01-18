@@ -42,12 +42,12 @@ namespace HistoricalEventExporter
         private static void ConfigureServices(WebApplicationBuilder builder)
         {
             //TeamMemberInvitedEvent exporter registration
-            builder.Services.AddSingleton<IEventExporter<TeamMemberInvitedEvent>, EventExporter<TeamMemberInvitedEvent>>();
-            builder.Services.AddHostedService<EventExporter<TeamMemberInvitedEvent>>(provider => provider.GetService<IEventExporter<TeamMemberInvitedEvent>>() as EventExporter<TeamMemberInvitedEvent>);
+            builder.Services.AddSingleton<IEventExporter<TeamMemberInvitedEvent.TeamMemberInvitedEvent>, EventExporter<TeamMemberInvitedEvent.TeamMemberInvitedEvent>>();
+            builder.Services.AddHostedService<EventExporter<TeamMemberInvitedEvent.TeamMemberInvitedEvent>>(provider => provider.GetService<IEventExporter<TeamMemberInvitedEvent.TeamMemberInvitedEvent>>() as EventExporter<TeamMemberInvitedEvent.TeamMemberInvitedEvent>);
 
             //BookingMadeEvent exporter registration
-            builder.Services.AddSingleton<IEventExporter<BookingMadeEvent>, EventExporter<BookingMadeEvent>>();
-            builder.Services.AddHostedService<EventExporter<BookingMadeEvent>>(provider => provider.GetService<IEventExporter<BookingMadeEvent>>() as EventExporter<BookingMadeEvent>);
+            builder.Services.AddSingleton<IEventExporter<BookingMadeEvent.BookingMadeEvent>, EventExporter<BookingMadeEvent.BookingMadeEvent>>();
+            builder.Services.AddHostedService<EventExporter<BookingMadeEvent.BookingMadeEvent>>(provider => provider.GetService<IEventExporter<BookingMadeEvent.BookingMadeEvent>>() as EventExporter<BookingMadeEvent.BookingMadeEvent>);
 
 
         }
