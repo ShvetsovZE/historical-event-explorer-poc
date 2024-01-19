@@ -38,13 +38,13 @@ namespace HistoricalEventExporter.Exporters
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             if (_ranManually)
-            {               
-                    _logger.LogInformation($"Starts Background service for {typeof(T).Name} event type export");
+            {
+                _logger.LogInformation($"Starts Background service for {typeof(T).Name} event type export");
 
-                    var events = await _eventDataReader.GetDataAsync();
-                    _logger.LogInformation($"Found {events.Count()} events of type {typeof(T).Name}");
+                var events = await _eventDataReader.GetDataAsync();
+                _logger.LogInformation($"Found {events.Count()} events of type {typeof(T).Name}");
 
-                    await _eventPublisher.PublishEventsAsync(events);
+                await _eventPublisher.PublishEventsAsync(events);
                 _logger.LogInformation($"Finished exporting events of type {typeof(T).Name}");
             }
             else
